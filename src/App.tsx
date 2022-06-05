@@ -5,7 +5,7 @@ import { PostList } from "./containers/PostList";
 import { PostDetail } from "./containers/PostDetail";
 
 export default function App() {
-  const [detailPost, setDetailPost] = useState("123");
+  const [detailPost, setDetailPost] = useState();
   return (
     <div className="App">
       <HashRouter>
