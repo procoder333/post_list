@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { fetchPostList } from "./../api/postApi";
 import { PostEntity } from "./../models/post";
-export const PostList = () => {
+export const PostList = (props) => {
   const [posts, setPosts] = useState<PostEntity[]>([]);
   const history = useHistory();
   useEffect(() => {
@@ -11,10 +11,10 @@ export const PostList = () => {
       setPosts(postData);
     }
     getPostList();
-  });
+  }, []);
   const goToDetail = (post: PostEntity) => {
-    history.push("/detail");
-    console.log("++++++++++++++", post);
+    history.push(`/detail/${post.id}`);
+    props.handlePost(post);
   };
   return (
     <div>

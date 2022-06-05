@@ -1,7 +1,7 @@
 import { PostEntity } from "../models/post";
 import Axios, { AxiosResponse } from "axios";
 
-const url = "https://jsonplaceholder.typicode.com/posts";
+const dataUrl = "https://jsonplaceholder.typicode.com/posts";
 
 const mapPostListToModel = ({ data }: AxiosResponse<any[]>): PostEntity[] =>
   data.map((post) => ({
@@ -11,15 +11,11 @@ const mapPostListToModel = ({ data }: AxiosResponse<any[]>): PostEntity[] =>
     body: post.body
   }));
 
-export const fetchPostList = (): Promise<PostEntity[]> => {
-  const promise = new Promise<PostEntity[]>((resolve, reject) => {
-    try {
-      Axios.get<PostEntity[]>(url).then((response) =>
-        resolve(mapPostListToModel(response))
-      );
-    } catch (ex) {
-      reject(ex);
-    }
-  });
-  return promise;
-};
+export async function fetchPostList() {
+  try {
+    const response = await Axios.get(dataUrl);
+    return mapPostListToModel(response);
+  } catch (err) {
+    throw err;
+  }
+}
